@@ -185,7 +185,7 @@ def run(i, lock, task_index, variation_count, results, file_lock, tasks):
     obs_config.front_camera.image_size = img_size
 
     # Store depth as 0 - 1
-    obs_config.right_shoulder_camera.depth_in_meters = False
+    obs_config.right_shoulder_camera.depth_in_meters = True
     obs_config.left_shoulder_camera.depth_in_meters = False
     obs_config.overhead_camera.depth_in_meters = False
     obs_config.wrist_camera.depth_in_meters = False

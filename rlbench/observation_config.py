@@ -4,7 +4,7 @@ from rlbench.noise_model import NoiseModel, Identity
 
 class CameraConfig(object):
     def __init__(self,
-                 rgb=True,
+                 rgb=False,
                  rgb_noise: NoiseModel=Identity(),
                  depth=True,
                  depth_noise: NoiseModel=Identity(),
