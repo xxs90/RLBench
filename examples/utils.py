@@ -13,9 +13,10 @@ def combinePointClouds(obs):
     cloud = np.concatenate((cloud_front, cloud_overhead, cloud_wrist, cloud_left_shoulder, cloud_right_shoulder))
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(cloud)
-    mesh_box = o3d.geometry.TriangleMesh.create_box(width=1.0, height=1.0, depth=0.8)
-    mesh_box.paint_uniform_color([0.9, 0.1, 0.1])
-    o3d.visualization.draw_geometries([pcd, mesh_box])
+    # # mesh_box = o3d.geometry.TriangleMesh.create_box(width=1.0, height=1.0, depth=0.8)
+    # # mesh_box.paint_uniform_color([0.9, 0.1, 0.1])
+    # # o3d.visualization.draw_geometries([pcd, mesh_box])
+    # o3d.visualization.draw_geometries([pcd])
     return cloud
 
 
