@@ -151,6 +151,7 @@ class TaskEnvironment(object):
                     demo = self._scene.get_demo(
                         callable_each_step=callable_each_step)
                     demo.random_seed = random_seed
+                    # print(demo)
                     demos.append(demo)
                     break
                 except Exception as e:

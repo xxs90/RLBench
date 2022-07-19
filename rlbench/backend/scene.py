@@ -18,6 +18,8 @@ from rlbench.backend.utils import rgb_handles_to_mask
 from rlbench.demo import Demo
 from rlbench.noise_model import NoiseModel
 from rlbench.observation_config import ObservationConfig, CameraConfig
+from rlbench.helping import combinePointClouds, getProjectImg
+import matplotlib.pyplot as plt
 
 STEPS_BEFORE_EPISODE_START = 10
 
@@ -336,6 +338,7 @@ class Scene(object):
         if record:
             self.pyrep.step()  # Need this here or get_force doesn't work...
             demo.append(self.get_observation())
+            # demo.append(self.get_observation())
         while True:
             success = False
             for i, point in enumerate(waypoints):
@@ -449,8 +452,15 @@ class Scene(object):
                 self._workspace_maxz > z > self._workspace_minz)
 
     def _demo_record_step(self, demo_list, record, func):
+        demo_list = []
         if record:
-            demo_list.append(self.get_observation())
+            get_obs = self.get_observation()
+            cloud = combinePointClouds(get_obs)
+            depth_img = getProjectImg(cloud, 1.0, 128, (0.35, 0.0, 1.2))
+            plt.imshow(depth_img)
+            plt.colorbar()
+            plt.show()
+            demo_list.append(get_obs)
         if func is not None:
             func(self.get_observation())
 
