@@ -41,8 +41,8 @@ demos = task.get_demos(2, live_demos=live_demos)
 agent = Agent(env.action_shape)
 agent.ingest(demos)
 
-training_steps = 120
-episode_length = 40
+training_steps = 1000
+episode_length = 50
 obs = None
 for i in range(training_steps):
     if i % episode_length == 0:
@@ -52,6 +52,7 @@ for i in range(training_steps):
     action = agent.act(obs)
     print(action)
     obs, reward, terminate = task.step(action)
+    print(reward, terminate)
 
 print('Done')
 env.shutdown()

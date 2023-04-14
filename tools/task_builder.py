@@ -276,7 +276,7 @@ if __name__ == '__main__':
     pr.step_ui()
 
     robot = Robot(Panda(), PandaGripper())
-    cam_config = CameraConfig(rgb=True, depth=True, mask=False,
+    cam_config = CameraConfig(rgb=True, depth=False, mask=False,
                               render_mode=RenderMode.OPENGL)
     obs_config = ObservationConfig()
     obs_config.set_all(False)

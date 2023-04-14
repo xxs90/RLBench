@@ -1,7 +1,7 @@
 import open3d as o3d
 import numpy as np
 import matplotlib.pyplot as plt
-import transformation
+import rlbench.transformation as tf
 import scipy
 
 def combinePointClouds(obs):
@@ -45,10 +45,10 @@ def interpolate(depth):
 def getProjectImg(cloud, target_size, img_size, camera_pos):
     z_min = 0
     cloud = cloud[(cloud[:, 2] < max(camera_pos[2], z_min + 0.05))]
-    view_matrix = transformation.euler_matrix(0, np.pi, 0).dot(np.eye(4))
+    view_matrix = tf.euler_matrix(0, np.pi, 0).dot(np.eye(4))
     # view_matrix = np.eye(4)
     view_matrix[:3, 3] = [camera_pos[0], -camera_pos[1], camera_pos[2]]
-    view_matrix = transformation.euler_matrix(0, 0, -np.pi / 2).dot(view_matrix)
+    view_matrix = tf.euler_matrix(0, 0, -np.pi / 2).dot(view_matrix)
     augment = np.ones((1, cloud.shape[0]))
     pts = np.concatenate((cloud.T, augment), axis=0)
     projection_matrix = np.array([
@@ -89,4 +89,3 @@ def getProjectImg(cloud, target_size, img_size, camera_pos):
     # fill nans
     depth = interpolate(depth)
     return depth
-    

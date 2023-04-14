@@ -338,7 +338,6 @@ class Scene(object):
         if record:
             self.pyrep.step()  # Need this here or get_force doesn't work...
             demo.append(self.get_observation())
-            # demo.append(self.get_observation())
         while True:
             success = False
             for i, point in enumerate(waypoints):
@@ -461,6 +460,7 @@ class Scene(object):
             plt.colorbar()
             plt.show()
             demo_list.append(get_obs)
+            # demo_list.append(self.get_observation())
         if func is not None:
             func(self.get_observation())
 

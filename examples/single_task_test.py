@@ -4,11 +4,9 @@ from rlbench.action_modes.arm_action_modes import JointVelocity, EndEffectorPose
 from rlbench.action_modes.gripper_action_modes import Discrete
 from rlbench.environment import Environment
 from rlbench.observation_config import ObservationConfig
-from rlbench.tasks import PutItemInDrawer as rltasks
+from rlbench.tasks import ReachTarget as tasks
 import matplotlib.pyplot as plt
-import utils
 from pyrep.robots.robot_component import RobotComponent as rc
-
 
 class Agent(object):
 
@@ -20,7 +18,7 @@ class Agent(object):
 
     def act(self, obs):
         arm = np.random.normal(0.0, 0.1, size=(self.action_shape[0] - 1,))
-        # # arm = [-4.0, -2.0, 3.0, 0.0, 0.0, 0.0, 1.0]
+        # arm = [-4.0, -2.0, 3.0, 0.0, 0.0, 0.0, 1.0]
         # print(arm)
 
         # arm = np.random.normal(1.0, 1.0, size=(self.action_shape[0] - 1,))
@@ -35,23 +33,26 @@ obs_config.set_all(True)
 action_mode = MoveArmThenGripper(arm_action_mode=JointVelocity(), gripper_action_mode=Discrete())
 
 env = Environment(
-    action_mode=action_mode, obs_config=ObservationConfig(), headless=False, robot_setup='panda')
+    action_mode=action_mode,
+    obs_config=ObservationConfig(),
+    headless=False,
+    robot_setup='panda')
 env.launch()
 
-task = env.get_task(rltasks)
+task = env.get_task(tasks)
 demos = task.get_demos(1, live_demos=True)
-
 agent = Agent(env.action_shape)
-agent.ingest(demos)
-# rc.get_joint_positions(agent)
 
-training_steps = 20
-episode_length = 4
+training_steps = 120
+episode_length = 40
 obs = None
-# x1 = 0  # -30.0 (lr)
-# x2 = 0.3  # 30.0
-# y1 = 0  # -30.0
-# y2 = 0.0  # 30.0
+
+# rc.get_joint_positions(agent)
+#
+# x1 = 0 #-30.0 (lr)
+# x2 = 0.3 #30.0
+# y1 = 0#-30.0
+# y2 = 0.0#30.0
 # z1 = 1.2
 # z2 = 1.4
 # q_i = 0.0
@@ -64,6 +65,7 @@ obs = None
 #           [x1, y1, z1, q_i, q_j, q_k, q, 1.0], [x2, y2, z2, q_i, q_j, q_k, q, 1.0],
 #           [x1, y1, z1, q_i, q_j, q_k, q, 1.0], [x2, y2, z2, q_i, q_j, q_k, q, 1.0]]
 # action = [x2, y2, z2, q_i, q_j, q_k, q, 1.0]
+
 for i in range(training_steps):
     if i % episode_length == 0:
         print('Reset Episode')
@@ -85,6 +87,15 @@ for i in range(training_steps):
     # ax[4].imshow(obs.right_shoulder_depth)
     # ax[4].set_title('right_shoulder')
     # plt.show()
+    # pcd = o3d.geometry.PointCloud()
+    # cloud_front = obs.front_point_cloud.reshape(-1, 3)
+    # cloud_overhead = obs.overhead_point_cloud.reshape(-1, 3)
+    # cloud_wrist = obs.front_point_cloud.reshape(-1, 3)
+    # cloud_left_shoulder = obs.left_shoulder_point_cloud.reshape(-1, 3)
+    # cloud_right_shoulder = obs.right_shoulder_point_cloud.reshape(-1, 3)
+    # cloud = np.concatenate((cloud_front, cloud_overhead, cloud_wrist, cloud_left_shoulder, cloud_right_shoulder))
+    # pcd.points = o3d.utility.Vector3dVector(cloud)
+    # o3d.visualization.draw_geometries([pcd])
 
     # cloud = utils.combinePointClouds(obs)
     # depth_img = utils.getProjectImg(cloud, 1.0, 128, (0.35, 0.0, 1.2))

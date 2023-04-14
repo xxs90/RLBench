@@ -4,7 +4,7 @@ from rlbench.action_modes.arm_action_modes import JointVelocity
 from rlbench.action_modes.gripper_action_modes import Discrete
 from rlbench.environment import Environment
 from rlbench.observation_config import ObservationConfig
-from rlbench.tasks import CloseDrawer
+from rlbench.tasks import ReachTarget
 
 
 class Agent(object):
@@ -25,7 +25,7 @@ env = Environment(
     headless=False)
 env.launch()
 
-task = env.get_task(CloseDrawer)
+task = env.get_task(ReachTarget)
 
 agent = Agent(env.action_shape)
 

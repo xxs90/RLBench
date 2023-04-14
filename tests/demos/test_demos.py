@@ -6,8 +6,6 @@ from pyrep import PyRep
 from pyrep.robots.arms.panda import Panda
 from pyrep.robots.end_effectors.panda_gripper import PandaGripper
 from rlbench.backend.const import TTT_FILE
-import sys
-sys.path.append(".")
 from tools.task_validator import task_smoke
 from rlbench.observation_config import ObservationConfig
 from rlbench.backend.scene import Scene
