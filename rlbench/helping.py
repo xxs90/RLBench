@@ -1,7 +1,6 @@
 import open3d as o3d
 import numpy as np
-import matplotlib.pyplot as plt
-import rlbench.transformation as tf
+import utils.transformation as tf
 import scipy
 
 def combinePointClouds(obs):

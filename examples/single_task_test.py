@@ -4,7 +4,8 @@ from rlbench.action_modes.arm_action_modes import JointVelocity, EndEffectorPose
 from rlbench.action_modes.gripper_action_modes import Discrete
 from rlbench.environment import Environment
 from rlbench.observation_config import ObservationConfig
-from rlbench.tasks import ReachTarget as tasks
+from rlbench.tasks import TestPick as tasks
+from rlbench.tasks import ReachTarget
 import matplotlib.pyplot as plt
 from pyrep.robots.robot_component import RobotComponent as rc
 
